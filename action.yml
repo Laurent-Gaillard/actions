@@ -20,7 +20,7 @@ outputs:
 
 runs:
   using: 'docker'
-  image: ./${INPUT_DOCKERFILE_PATH}/Dockerfile
+  image: ./ACTIONS/Dockerfile
   #image: ./${{ inputs.dockerfile_path }}/Dockerfile
   #image: ./centos_stream8/Dockerfile
   env:
