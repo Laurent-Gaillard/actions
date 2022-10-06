@@ -20,7 +20,8 @@ outputs:
 
 runs:
   using: 'docker'
-  image: ${{ inputs.dockerfile_path }}/Dockerfile
+  #image: ./${{ inputs.dockerfile_path }}/Dockerfile
+  image: ./centos_stream8/Dockerfile
   env:
     SPEC_FILE_LOCATION: ${{ inputs.spec_file_location }}
     SELINUX_FILES_LOCATION: ${{ inputs.selinux_files_location }}
