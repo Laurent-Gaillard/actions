@@ -1,6 +1,0 @@
-name: 'Run Semodule Build on container'
-description: 'Build SELinux modules on targeted OS'
-
-runs:
-  using: 'docker'
-  image: Dockerfile
