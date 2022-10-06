@@ -1,0 +1,22 @@
+name: 'Run Semodule Build on container'
+description: 'Build SELinux modules on targeted OS'
+
+inputs:
+  spec_file_location:
+    description: 'Give the relative path of the SPEC file'
+    required: true
+    default: ''
+  selinux_files_location:
+    description: 'Give the relative path of the SELinux files'
+    required: true
+    default: ''
+outputs:
+  rpmbuild_output_file: 
+    description: 'The RPM file that was generated'
+
+runs:
+  using: 'docker'
+  image: Dockerfile
+  env:
+    SPEC_FILE_LOCATION: ${{ inputs.spec_file_location }}
+    SELINUX_FILES_LOCATION: ${{ inputs.selinux_files_location }}
