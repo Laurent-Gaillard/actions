@@ -2,10 +2,6 @@ name: 'Run Semodule Build on container'
 description: 'Build SELinux modules on targeted OS'
 
 inputs:
-  dockerfile_path:
-    description: 'Give the relative path of the dockerfile'
-    required: true
-    default: ''
   spec_file_location:
     description: 'Give the relative path of the SPEC file'
     required: true
@@ -20,9 +16,7 @@ outputs:
 
 runs:
   using: 'docker'
-  image: ./ACTIONS/Dockerfile
-  #image: ./${{ inputs.dockerfile_path }}/Dockerfile
-  #image: ./centos_stream8/Dockerfile
+  image: Dockerfile
   env:
     SPEC_FILE_LOCATION: ${{ inputs.spec_file_location }}
     SELINUX_FILES_LOCATION: ${{ inputs.selinux_files_location }}
