@@ -1,19 +1,32 @@
 #! /bin/bash
 
+WORKDIR=/github/workspace
+
 pwd
-mkdir -p rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
-cp springboot.* rpmbuild/SOURCES/
-cp selinux_springboot.spec rpmbuild/SPECS/
+mkdir -p ${WORKDIR}/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+cp *.te *.if *.fc ${WORKDIR}/rpmbuild/SOURCES/
+cp *.spec ${WORKDIR}/rpmbuild/SPECS/
+
 echo "First LS"
 ls -lR
 
 echo "This is where we are"
+
 pwd
 
-/usr/bin/rpmbuild -bb rpmbuild/SPECS/selinux_springboot.spec
 
-#We can work in /root/rpmbuild and then copy file to the workspace. This has to be decided.
 
-echo "Second LS ${1}"
-echo "::set-output name=rpm_file::titi/toto.rpm"
-ls -lR
+RC=0
+
+for specfile in $( find ${WORKDIR}/rpmbuild/SPECS/ -type f)
+do
+  /usr/bin/rpmbuild -bb -D "_topdir ${WORKDIR}/rpmbuild" ${specfile}
+  RC=$(($RC + $? ))
+done
+
+echo"::set-output name=rpm_dir::rpmbuild/RPMS"
+
+find rpmbuild/RPMS
+
+exit $RC

@@ -6,7 +6,6 @@ FROM quay.io/centos/centos:7
 RUN yum install -y selinux-policy-devel rpm-build
 
 COPY ./script.sh .
-COPY ./rpmmacros ./.rpmmacros
 
 RUN chmod u+x script.sh
 RUN ls -l
