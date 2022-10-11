@@ -1,8 +1,8 @@
-FROM quay.io/centos/centos:XXXXXXX
+FROM quay.io/centos/centos:stream9
 
-#RUN yum update -y
+#RUN dnf update -y
 
-RUN yum install -y selinux-policy-devel rpm-build
+RUN dnf install -y selinux-policy-devel rpm-build
 
 COPY ./script.sh .
 
