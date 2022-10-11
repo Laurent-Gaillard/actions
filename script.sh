@@ -19,6 +19,7 @@ RC=$(($RC + $? ))
 
 for specfile in $( find ${WORKDIR}/rpmbuild/SPECS/ -type f )
 do
+  echo /usr/bin/rpmbuild -bb ${RPMMACROS_OPTIONS} ${specfile}
   /usr/bin/rpmbuild -bb ${RPMMACROS_OPTIONS} ${specfile}
   RC=$(($RC + $? ))
 done
