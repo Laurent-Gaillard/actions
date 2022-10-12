@@ -1,26 +1,44 @@
 #! /bin/bash
 
+RC=0
 WORKDIR=/github/workspace
 
 pwd
+
 mkdir -p ${WORKDIR}/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
-
-RC=0
-
-cp ${INPUT_SELINUX_FILES_LOCATION}/{*.te,*.fc,*.if} ${WORKDIR}/rpmbuild/SOURCES/
-RC=$(($RC + $? ))
-cp ${INPUT_SPEC_FILE_LOCATION}/*.spec ${WORKDIR}/rpmbuild/SPECS/
 RC=$(($RC + $? ))
 
-for specfile in $( find ${WORKDIR}/rpmbuild/SPECS/ -type f )
-do
-  /usr/bin/rpmbuild -bb \
-    --define="_topdir ${WORKDIR}/rpmbuild" \
-    --define="_builddir ${WORKDIR}/${INPUT_SOURCE_REPO}" \
-    --define="provided_version ${INPUT_PROVIDED_VERSION:-null}" \
-    --define="provided_release ${INPUT_PROVIDED_RELEASE:-null}" \
-    ${specfile}
+if [ $RC -eq 0 ]
+then
+  echo "Source repository directory is: ${WORKDIR}/${INPUT_SOURCE_REPO}"
+  echo "::notice title=RPMbuild::Source repository directory is ${WORKDIR}/${INPUT_SOURCE_REPO}"
+
+  # Check that at least one SPEC file exists
+  ls ${WORKDIR}/${INPUT_SOURCE_REPO}/${INPUT_SPEC_FILE_LOCATION}/*.spec
   RC=$(($RC + $? ))
-done
+
+  if [ $RC -eq 0 ]
+  then
+    echo "::notice title=RPMbuild::Source repository directory is ${WORKDIR}/${INPUT_SOURCE_REPO}"
+
+    for specfile in ${WORKDIR}/${INPUT_SOURCE_REPO}/${INPUT_SPEC_FILE_LOCATION}/*.spec
+    do
+      /usr/bin/rpmbuild -bb \
+        --define="_topdir ${WORKDIR}/rpmbuild" \
+        --define="_builddir ${WORKDIR}/${INPUT_SOURCE_REPO}" \
+        --define="provided_version ${INPUT_PROVIDED_VERSION:-null}" \
+        --define="provided_release ${INPUT_PROVIDED_RELEASE:-null}" \
+        ${specfile}
+      rc=$?
+      [ $rc -ne 0 ] && echo "::error title=RPMbuild::Could not build RPM for spec file ${specfile}."
+      
+      RC=$(($RC + $rc ))
+    done
+  else
+    echo "::error title=RPMbuild::Could not find RPM spec file in ${WORKDIR}/${INPUT_SOURCE_REPO}/${INPUT_SPEC_FILE_LOCATION}/"
+  fi
+else
+  echo "::error title=RPMbuild::Unable to create directories under ${WORKDIR}"
+fi
 
 exit $RC
