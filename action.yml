@@ -23,13 +23,6 @@ inputs:
     required: true
     default: ''
 
-
 runs:
   using: 'docker'
   image: Dockerfile
-  env:
-    SOURCE_REPO: ${{ inputs.source_repo_location }}
-    SPEC_FILE_LOCATION: ${{ inputs.spec_file_location }}
-    SELINUX_FILES_LOCATION: ${{ inputs.selinux_files_location }}
-    PROVIDED_VERSION: ${{ inputs.provided_version }}
-    PROVIDED_RELEASE: ${{ inputs.provided_release }}
