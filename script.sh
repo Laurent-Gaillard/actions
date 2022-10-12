@@ -16,6 +16,7 @@ for specfile in $( find ${WORKDIR}/rpmbuild/SPECS/ -type f )
 do
   /usr/bin/rpmbuild -bb \
     --define="_topdir ${WORKDIR}/rpmbuild" \
+    --define="_builddir ${WORKDIR}/${INPUT_SOURCE_REPO}" \
     --define="provided_version ${INPUT_PROVIDED_VERSION:-null}" \
     --define="provided_release ${INPUT_PROVIDED_RELEASE:-null}" \
     ${specfile}
