@@ -7,11 +7,11 @@ inputs:
     required: true
     default: 'SOURCE_REPO'
   spec_file_location:
-    description: 'Provides the relative path to the source_repository of the SPEC file'
+    description: 'Provides the relative path to the source repository of the SPEC file'
     required: true
     default: ''
   selinux_files_location:
-    description: 'Provides the relative path to the source_repository of the SELinux files'
+    description: 'Provides the relative path to the source repository of the SELinux files'
     required: true
     default: ''
   provided_version:
