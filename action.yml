@@ -1,0 +1,30 @@
+name: 'Run Semodule Build on container'
+description: 'Build SELinux modules on targeted OS'
+
+inputs:
+  spec_file_location:
+    description: 'Provides the relative path to the source_repository of the SPEC file'
+    required: true
+    default: ''
+  selinux_files_location:
+    description: 'Provides the relative path to the source_repository of the SELinux files'
+    required: true
+    default: ''
+  provided_version:
+    description: 'RPM version if parameter'
+    required: true
+    default: ''  
+  provided_release:
+    description: 'RPM release if parameter'
+    required: true
+    default: ''
+
+
+runs:
+  using: 'docker'
+  image: Dockerfile
+  env:
+    SPEC_FILE_LOCATION: ${{ inputs.spec_file_location }}
+    SELINUX_FILES_LOCATION: ${{ inputs.selinux_files_location }}
+    PROVIDED_VERSION: ${{ inputs.provided_version }}
+    PROVIDED_RELEASE: ${{ inputs.provided_release }}
