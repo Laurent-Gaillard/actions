@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:XXXXXXX
+FROM quay.io/centos/centos:stream8
 
 #RUN yum update -y
 
