@@ -1,4 +1,4 @@
-FROM  quay.io/fedora/fedora:36
+FROM  quay.io/fedora/fedora:37
 
 #RUN yum update -y
 
