@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:stream8
+FROM quay.io/almalinuxorg/almalinux:8
 
 #RUN yum update -y
 
