@@ -6,7 +6,7 @@ FROM  quay.io/fedora/fedora:39
 
 #RUN yum update -y
 
-RUN yum install -y selinux-policy-devel rpm-build
+RUN dnf install -y selinux-policy-devel rpm-build rpm-sign
 
 COPY ./script.sh .
 
