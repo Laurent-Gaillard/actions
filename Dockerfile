@@ -2,7 +2,7 @@ FROM quay.io/centos/centos:XXXXXXX
 
 #RUN yum update -y
 
-RUN yum install -y selinux-policy-devel rpm-build
+RUN yum install -y selinux-policy-devel rpm-build rpmsign
 
 COPY ./script.sh .
 
