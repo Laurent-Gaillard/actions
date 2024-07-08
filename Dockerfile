@@ -2,7 +2,7 @@ FROM quay.io/almalinuxorg/almalinux:8
 
 #RUN yum update -y
 
-RUN yum install -y selinux-policy-devel rpm-build rpmsign
+RUN dnf install -y selinux-policy-devel rpm-build rpm-sign
 
 COPY ./script.sh .
 
