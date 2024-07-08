@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:XXXXXXX
+FROM  quay.io/fedora/fedora:40
 
 #RUN yum update -y
 
