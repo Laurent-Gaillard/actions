@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-FROM quay.io/centos/centos:XXXXXXX
-=======
 FROM  quay.io/fedora/fedora:39
->>>>>>> 1e7c445 (Create Fedora 39 branch)
 
 #RUN yum update -y
 
