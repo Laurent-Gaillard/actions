@@ -2,7 +2,7 @@ FROM quay.io/centos/centos:centos7
 
 #RUN yum update -y
 
-RUN dnf install -y selinux-policy-devel rpm-build rpm-sign
+RUN yum install -y selinux-policy-devel rpm-build rpm-sign
 
 COPY ./script.sh .
 
