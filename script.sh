@@ -36,9 +36,8 @@ then
           --define="_sepol_maxver_cond <= ${_sepol_maxver_cond}" \
           ${specfile}
         rc=$?
+        RC=$(( $RC + $rc ))
         [ $rc -ne 0 ] && echo "::error title=RPMbuild::Could not build RPM for spec file ${specfile}."
-        
-        RC=$(($RC + $rc ))
       done
     else
       echo "::error title=RPMbuild::Could not define selinux-policy version requirements"
@@ -46,6 +45,22 @@ then
   else
     echo "::error title=RPMbuild::Could not find RPM spec file in ${WORKDIR}/${INPUT_SOURCE_REPO_LOCATION}/${INPUT_SPEC_FILE_LOCATION}/"
   fi
+
+  #Signing all rpms that were created
+  if [ $RC -eq 0 ] 
+  then
+    gpg --batch  --passphrase-file .${INPUT_GPG_PRIVATE_KEY_FILE}.passphrase --import ${INPUT_GPG_PRIVATE_KEY_FILE}
+    rc1=$?
+    [ $rc1 -ne 0 ] && echo "::error title=RPMbuild::Could not import private key."
+
+    export GPG_TTY=$(tty)
+    rpmsign --define="_gpg_name ${INPUT_GPG_NAME}" --define="_gpg_sign_cmd_extra_args --batch --passphrase-file .${INPUT_GPG_PRIVATE_KEY_FILE}.passphrase --pinentry-mode loopback" --addsign ${WORKDIR}/rpmbuild/RPMS/*/*.rpm
+    rc2=$?
+    [ $rc2 -ne 0 ] && echo "::error title=RPMbuild::Could not sign the RPMs that were previously generated."
+    rpm -qpi ${WORKDIR}/rpmbuild/RPMS/*/*.rpm | grep ^Sign
+    rc2=$(($rc2 + $? ))
+  fi
+  RC=$(( $RC + $rc1 + $rc2 ))
 else
   echo "::error title=RPMbuild::Unable to create directories under ${WORKDIR}"
 fi

@@ -2,7 +2,7 @@ FROM quay.io/centos/centos:stream9
 
 #RUN dnf update -y
 
-RUN dnf install -y selinux-policy-devel rpm-build
+RUN dnf install -y selinux-policy-devel rpm-build rpm-sign
 
 COPY ./script.sh .
 
