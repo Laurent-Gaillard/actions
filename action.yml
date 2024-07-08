@@ -22,7 +22,14 @@ inputs:
     description: 'RPM release if parameter'
     required: true
     default: ''
-
+  gpg_name:
+    description: 'GPG pretty name of the key'
+    required: true
+    default: ''
+  gpg_private_key_file:
+    description: 'GPG key file'
+    required: true
+    default: ''
 runs:
   using: 'docker'
   image: Dockerfile
