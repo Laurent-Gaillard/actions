@@ -58,7 +58,7 @@ then
     rc2=$?
     [ $rc2 -ne 0 ] && echo "::error title=RPMbuild::Could not sign the RPMs that were previously generated."
     rpm -qpi ${WORKDIR}/rpmbuild/RPMS/*/*.rpm | grep ^Sign
-    rc2=$(($rc2 + $? ))
+    rc2=$(( $rc2 + $? ))
   fi
   RC=$(( $RC + $rc1 + $rc2 ))
 else
